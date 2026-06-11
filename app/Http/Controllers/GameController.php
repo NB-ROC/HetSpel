@@ -11,7 +11,7 @@ use Illuminate\Http\Request;
 
 class GameController extends Controller
 {
-        public function index()
+    public function index()
     {
         $games = Game::query()
             ->where('player_x_id', Auth::id())
@@ -24,11 +24,10 @@ class GameController extends Controller
 
     public function create()
     {
-        $players = User::all()
-            ->where('id', '!=', Auth::id())
-            ->orderBy('name')
-            ->get();
-
+        // in SQL gebeurd er dan: 'SELECT * FROM USERS WHERE id !=  Auth::id() ORDER BY name'
+        $players = User::query()->where('id', '!=', Auth::id())->orderBy('name')->get();
+        
+        //meesturen van alle players behalve waarmee in ben ingelogd
         return view('game.create', compact('players'));
     }
 
@@ -41,7 +40,7 @@ class GameController extends Controller
         $game = Game::create([
             'player_x_id' => Auth::id(),
             'player_o_id' => $validated['opponent_id'],
-            'status' => Game::STATUS_ACTIVE,
+            'status' => 'active',
             'current_turn' => 'X',
             'started_at' => now(),
         ]);
