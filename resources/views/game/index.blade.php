@@ -4,7 +4,7 @@
             Mijn spellen
         </h1>
 
-        <a href="{{ route('games.create') }}">
+        <a href="{{ route('game.create') }}">
             Nieuwe game starten
         </a>
 

@@ -4,7 +4,9 @@ namespace App\Http\Controllers;
 
 use App\Models\Game;
 use App\Models\User;
-use App\Http\Controllers\Auth;
+use Illuminate\Support\Facades\Auth;
+
+
 use Illuminate\Http\Request;
 
 class GameController extends Controller
@@ -22,7 +24,7 @@ class GameController extends Controller
 
     public function create()
     {
-        $players = User::query()
+        $players = User::all()
             ->where('id', '!=', Auth::id())
             ->orderBy('name')
             ->get();
