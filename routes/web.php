@@ -14,18 +14,16 @@ Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
-});
 
 
-// Voor het spel
-Route::middleware(['auth'])->group(function () {
+    //toegevoegd aan de bestaande groep auth
     Route::resource('game', GameController::class)
-        ->only([
-            'index',
-            'create',
-            'store',
-            'show',
-        ]);
+    ->only([
+        'index',
+        'create',
+        'store',
+        'show',
+    ]);
 });
 
 
