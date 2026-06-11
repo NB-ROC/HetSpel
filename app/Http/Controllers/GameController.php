@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Game;
 use App\Models\User;
+use App\Http\Controllers\Auth;
 use Illuminate\Http\Request;
 
 class GameController extends Controller
@@ -16,7 +17,7 @@ class GameController extends Controller
             ->latest()
             ->get();
 
-        return view('games.index', compact('games'));
+        return view('game.index', compact('games'));
     }
 
     public function create()
@@ -26,7 +27,7 @@ class GameController extends Controller
             ->orderBy('name')
             ->get();
 
-        return view('games.create', compact('players'));
+        return view('game.create', compact('players'));
     }
 
     public function store(Request $request)
@@ -43,7 +44,7 @@ class GameController extends Controller
             'started_at' => now(),
         ]);
 
-        return redirect()->route('games.show', $game);
+        return redirect()->route('game.show', $game);
     }
 
     public function show(Game $game)
@@ -55,6 +56,6 @@ class GameController extends Controller
             'rounds.player',
         ]);
 
-        return view('games.show', compact('game'));
+        return view('game.show', compact('game'));
     }
 }
