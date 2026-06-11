@@ -1,12 +1,31 @@
 <?php
 
-use App\Http\Controllers\SpelController;
+use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\GameController;
 
 Route::get('/', function () {
     return view('welcome');
 });
 
-Route::get('/spel/', [SpelController::class, 'spelSpelen']);
 
-Route::post('/timm', [SpelController::class, 'timpost'])->name('timm');
+Route::middleware('auth')->group(function () {
+    Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
+    Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
+    Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
+});
+
+
+
+Route::middleware(['auth'])->group(function () {
+    Route::resource('games', GameController::class)
+        ->only([
+            'index',
+            'create',
+            'store',
+            'show',
+        ]);
+});
+
+
+require __DIR__.'/auth.php';
